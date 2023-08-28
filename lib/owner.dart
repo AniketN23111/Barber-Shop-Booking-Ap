@@ -330,7 +330,7 @@ class _OwnerState extends State<Owner> {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 if (_formKey.currentState!.validate()) {

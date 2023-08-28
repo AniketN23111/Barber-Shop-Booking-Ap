@@ -84,7 +84,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                       hintText: 'Shop Name',
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset('assets/Icons/shop.svg'),
+                        child: SvgPicture.asset('assets/icons/shop.svg'),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -179,48 +179,60 @@ class _ShopDetailsState extends State<ShopDetails> {
                 children: [
                   Flexible(
                     flex: 1, // Adjust flex values as needed
-                    child: DropdownButtonFormField<String>(
-                      value: selectedCity,
-                      items: cities.map((city) {
-                        return DropdownMenuItem<String>(
-                          value: city,
-                          child: Text(city),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCity = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'City',
-                        prefixIcon: Icon(Icons.location_city),
-                        border: InputBorder.none,
-                        fillColor: Colors.white,
-                        //filled: true,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
+                      child: DropdownButtonFormField<String>(
+                        value: selectedCity,
+                        items: cities.map((city) {
+                          return DropdownMenuItem<String>(
+                            value: city,
+                            child: Text(city),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCity = value!;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'City',
+                          prefixIcon: Icon(Icons.location_city),
+                          border: InputBorder.none,
+                          fillColor: Colors.white,
+                          //filled: true,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(width: 10),
                   Flexible(
                     flex: 2, // Adjust flex values as needed
-                    child: DropdownButtonFormField<String>(
-                      value: selectedState,
-                      items: states.map((state) {
-                        return DropdownMenuItem<String>(
-                          value: state,
-                          child: Text(state),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedState = value!;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'State',
-                        prefixIcon: Icon(Icons.location_on),
-                        border: InputBorder.none,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
+                      child: DropdownButtonFormField<String>(
+                        value: selectedState,
+                        items: states.map((state) {
+                          return DropdownMenuItem<String>(
+                            value: state,
+                            child: Text(state),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedState = value!;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'State',
+                          prefixIcon: Icon(Icons.location_on),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
@@ -231,26 +243,33 @@ class _ShopDetailsState extends State<ShopDetails> {
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
-              child: DropdownButtonFormField<String>(
-                value: selectedCountry,
-                items: countries.map((country) {
-                  return DropdownMenuItem<String>(
-                    value: country,
-                    child: Text(country),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCountry = value!;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Country',
-                  prefixIcon: Icon(Icons.public),
-                  border: InputBorder.none,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                child: DropdownButtonFormField<String>(
+                  value: selectedCountry,
+                  items: countries.map((country) {
+                    return DropdownMenuItem<String>(
+                      value: country,
+                      child: Text(country),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCountry = value!;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Country',
+                    prefixIcon: Icon(Icons.public),
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
+            SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Container(
@@ -279,7 +298,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                       hintText: 'Shop License',
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset('assets/Icons/license.svg'),
+                        child: SvgPicture.asset('assets/icons/license.svg'),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -327,7 +346,8 @@ class _ShopDetailsState extends State<ShopDetails> {
                               activeColor: Colors.white,
                               checkColor: Colors.black,
                             ),
-                            Text(getDayName(index)),
+                            Text(getDayName(index),
+                            style: TextStyle(color: Colors.white)),
                           ],
                         );
                       },
@@ -367,6 +387,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                 ],
               ),
             ),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
@@ -375,7 +396,7 @@ class _ShopDetailsState extends State<ShopDetails> {
               child: AnimatedContainer(
                 duration: const Duration(microseconds: 200),
                 height: 30,
-                width: 30,
+                width: 100,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10),
@@ -392,13 +413,10 @@ class _ShopDetailsState extends State<ShopDetails> {
                         spreadRadius: 1),
                   ],
                 ),
-                child: SvgPicture.asset(
-                  'assets/icons/plus-svgrepo-com.svg',
-                  width: 10,
-                  height: 10,
+                child: Center(child: Text('Submit')),
                 ),
               ),
-            ),
+            SizedBox(height: 20),
           ],
         ),
       ),

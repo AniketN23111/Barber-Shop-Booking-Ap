@@ -35,8 +35,8 @@ class _TimePickerButtonState extends State<TimePickerButton> {
       onTap: _selectTime,
       child: AnimatedContainer(
         duration: const Duration(microseconds: 200),
-        height: 30,
-        width: 400,
+        height: 50,
+        width: 500,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(10),
