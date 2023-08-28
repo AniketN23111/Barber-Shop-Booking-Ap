@@ -1,7 +1,9 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:saloon/timepickerbutton.dart';
+
 
 class ShopDetails extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _ShopDetailsState extends State<ShopDetails> {
   TextEditingController _licence = TextEditingController();
   bool isEleveted = false;
   final _formKey = GlobalKey<FormState>();
+  GlobalKey<AutoCompleteTextFieldState<String>> autoCompleteKey =
+  GlobalKey<AutoCompleteTextFieldState<String>>();
 
   // TextEditingController _pincode=TextEditingController();
 
@@ -24,7 +28,15 @@ class _ShopDetailsState extends State<ShopDetails> {
     'Country 2',
     'Country 3'
   ]; // Example countries
-  List<String> cities = ['Pune', 'City 2', 'City 3']; // Example cities
+  List<String> cities = ['Pune', 'City 2', 'City 3'];
+  Map<String, List<String>> cityAreas = {
+    'Pune': ['Area 1', 'Area 2', 'Area 3'],
+    'City 2': ['Area 4', 'Area 5', 'Area 6'],
+    'City 3': ['Area 7', 'Area 8', 'Area 9'],
+  };
+
+  String selectedArea = ''; 
+  List<String> areas = [];
 
   String selectedState = 'Maharashtra'; // Default state
   String selectedCountry = 'India'; // Default country
@@ -195,6 +207,9 @@ class _ShopDetailsState extends State<ShopDetails> {
                         onChanged: (value) {
                           setState(() {
                             selectedCity = value!;
+                            selectedArea = '';
+                            areas = cityAreas[selectedCity] ?? [];
+                            autoCompleteKey.currentState!.updateSuggestions(areas);
                           });
                         },
                         decoration: InputDecoration(
@@ -264,6 +279,36 @@ class _ShopDetailsState extends State<ShopDetails> {
                   decoration: InputDecoration(
                     labelText: 'Country',
                     prefixIcon: Icon(Icons.public),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                child: AutoCompleteTextField(
+                  key: autoCompleteKey,
+                  controller: TextEditingController(text: selectedArea),
+                  clearOnSubmit: false,
+                  suggestions: areas,
+                  itemBuilder: (context, suggestion) => ListTile(title: Text(suggestion)),
+                  itemFilter: (suggestion, input) =>
+                      suggestion.toLowerCase().startsWith(input.toLowerCase()),
+                  itemSorter: (a, b) => a.compareTo(b),
+                  itemSubmitted: (value) {
+                    setState(() {
+                      selectedArea = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Area',
+                    prefixIcon: Icon(Icons.location_on),
                     border: InputBorder.none,
                   ),
                 ),
