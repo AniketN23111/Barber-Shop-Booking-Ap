@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,7 +55,7 @@ class _OwnerState extends State<Owner> {
                         controller: _firstname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Name is Empty';
+                            return 'First Name is Empty';
                           }
                         },
                         decoration: InputDecoration(
@@ -93,7 +94,7 @@ class _OwnerState extends State<Owner> {
                         controller: _lastname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Name is Empty';
+                            return 'Last Name is Empty';
                           }
                         },
                         decoration: InputDecoration(
@@ -175,8 +176,12 @@ class _OwnerState extends State<Owner> {
                         controller: _mNumber,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Name is Empty';
+                            return 'Number is Empty';
                           }
+                          else if(text.length<=9)
+                            {
+                              return 'Put the 10 Digit Number';
+                            }
                         },
                         decoration: InputDecoration(
                             filled: true,
@@ -215,11 +220,9 @@ class _OwnerState extends State<Owner> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _email,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
-                    }
-                  },
+                  validator: (text) => text!=null && !EmailValidator.validate(text)
+                    ?'Enter Valid Mail'
+                    : null,
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -254,10 +257,19 @@ class _OwnerState extends State<Owner> {
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _aadhar,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(12),
+                    AadhaarCardNumber()
+                  ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      return 'Aadhaar Number is Empty';
                     }
+                    else if(text.length<=11)
+                      {
+                        return("Enter Valid Aadhaar Number");
+                      }
                   },
                   decoration: InputDecoration(
                       filled: true,
@@ -293,6 +305,10 @@ class _OwnerState extends State<Owner> {
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _pan,
+                  textCapitalization: TextCapitalization.characters,
+                  inputFormatters: <TextInputFormatter>[
+                    LengthLimitingTextInputFormatter(10)
+                  ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Name is Empty';
@@ -322,8 +338,8 @@ class _OwnerState extends State<Owner> {
               },
               child: AnimatedContainer(
                 duration: const Duration(microseconds: 200),
-                height: 30,
-                width: 30,
+                height: 50,
+                width: 100,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10),
@@ -340,16 +356,38 @@ class _OwnerState extends State<Owner> {
                         spreadRadius: 1),
                   ],
                 ),
-                child: SvgPicture.asset(
-                  'assets/icons/plus-svgrepo-com.svg',
-                  width: 10,
-                  height: 10,
-                ),
+                child: Center(child: Text("Submit"))
               ),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class AadhaarCardNumber extends TextInputFormatter{
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue){
+    if(newValue.selection.baseOffset==0)
+      {
+        return newValue;
+      }
+
+    String enteredData = newValue.text;
+    StringBuffer buffer =StringBuffer();
+
+    for(int i=0;i<enteredData.length;i++)
+      {
+        buffer.write(enteredData[i]);
+        int index =i+1;
+        if(index%4==0 && enteredData.length!= index){
+          buffer.write(" ");
+        }
+      }
+  return TextEditingValue(
+    text: buffer.toString(),
+    selection: TextSelection.collapsed(offset: buffer.toString().length)
+  );
   }
 }
