@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:saloon/main.dart';
+
+class TimePickerButton extends StatefulWidget {
+  final String label;
+  final TimeOfDay selectedTime;
+  final ValueChanged<TimeOfDay> onChanged;
+  bool isEleveted = false;
+
+  TimePickerButton({
+    required this.label,
+    required this.selectedTime,
+    required this.onChanged,
+  });
+
+  @override
+  _TimePickerButtonState createState() => _TimePickerButtonState();
+}
+
+class _TimePickerButtonState extends State<TimePickerButton> {
+  Future<void> _selectTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: widget.selectedTime,
+    );
+    if (picked != null) {
+      widget.onChanged(picked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _selectTime,
+      child: AnimatedContainer(
+        duration: const Duration(microseconds: 200),
+        height: 30,
+        width: 400,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey[500]!,
+                offset: const Offset(4, 4),
+                blurRadius: 15,
+                spreadRadius: 1),
+            const BoxShadow(
+                color: Colors.white,
+                offset: const Offset(-4, -4),
+                blurRadius: 15,
+                spreadRadius: 1),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            '${widget.label}: ${widget.selectedTime.format(context)}',
+            style: TextStyle(
+              color: Colors.black,
+            ), // Set text color to white
+          ),
+        ),
+      ),
+    );
+  }
+}
