@@ -16,7 +16,7 @@ class _SplashScreen extends State<SplashScreen> {
   }
 
   startTimer() {
-    var duration = Duration(seconds: 3);
+    var duration = Duration(seconds: 2);
     return Timer(duration, route);
   }
 
@@ -34,15 +34,14 @@ class _SplashScreen extends State<SplashScreen> {
             children: [
               SizedBox(height: 300),
               Center(
-                child: Lottie.network(
-                    'https://lottie.host/662e5090-cd57-48ed-bac8-64c1653f5116/BTknOyOUY1.json'),
+                child: Image.asset('assets/salon-s.gif'),
               ),
               SizedBox(height: 20),
               DefaultTextStyle(
-                style: const TextStyle(fontSize: 40.0, fontFamily: 'Shrikhand'),
+                style: const TextStyle(fontSize: 40.0, fontFamily: 'Horizon'),
                 child: AnimatedTextKit(
                   animatedTexts: [
-                    RotateAnimatedText('Salon'),
+                    WavyAnimatedText('Salon'),
                   ],
                 ),
               ),
