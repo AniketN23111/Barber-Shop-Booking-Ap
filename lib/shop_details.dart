@@ -86,7 +86,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _shopname,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      return 'Shop Name is Empty';
                     }
                   },
                   decoration: InputDecoration(
@@ -123,7 +123,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _address,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      return 'Address is Empty';
                     }
                   },
                   decoration: InputDecoration(
@@ -165,7 +165,14 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _pincode,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      return 'Pin-code is Empty';
+                    }
+                    else if(text.length<=5)
+                      {
+                        return 'Pin-code is not valid';
+                      }
+                    else{
+
                     }
                   },
                   decoration: InputDecoration(
@@ -333,7 +340,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _licence,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      return 'Shop License is Empty';
                     }
                   },
                   decoration: InputDecoration(
