@@ -1,9 +1,11 @@
+import 'package:csc_picker/model/select_status_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:saloon/main.dart';
 import 'package:saloon/shop_details.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 class Owner extends StatefulWidget {
   @override
@@ -124,7 +126,7 @@ class _OwnerState extends State<Owner> {
                   Flexible(
                     flex: 1,
                     child: Container(
-                      width: 70,
+                      width: 100,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -133,23 +135,21 @@ class _OwnerState extends State<Owner> {
                               spreadRadius: 0.0)
                         ],
                         color: Color.fromRGBO(247, 247, 249, 1),
-                        borderRadius: BorderRadius.circular(32.0),
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
-                      child: TextFormField(
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(2)
-                        ],
-
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(15),
-                            hintText: '+91',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide.none)),
+                      child: CountryCodePicker(
+                        initialSelection: 'IN',
+                        showCountryOnly: false,
+                        showOnlyCountryWhenClosed: false,
+                        favorite: ['+91','IN'],
+                        enabled: true,
+                        hideMainText: false,
+                        showFlagMain: true,
+                        showFlag: true,
+                        hideSearch: false,
+                        showFlagDialog: true,
+                        alignLeft: true,
+                        padding: EdgeInsets.all(1.0),
                       ),
                     ),
                   ),
@@ -186,10 +186,10 @@ class _OwnerState extends State<Owner> {
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(15),
+                            contentPadding: EdgeInsets.all(5),
                             hintText: 'Mobile Number',
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.all(9),
+                              padding: const EdgeInsets.all(12),
                               child: SvgPicture.asset(
                                   'assets/icons/phone-svgrepo-com.svg'),
                             ),
