@@ -227,6 +227,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                 children: [
                   CSCPicker(
                     showCities: true,
+                    showStates: true,
                     defaultCountry: CscCountry.India,
                     flagState: CountryFlag.ENABLE,
                     disabledDropdownDecoration: BoxDecoration(
