@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:saloon/timepickerbutton.dart';
-
+import 'package:csc_picker/csc_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ShopDetails extends StatefulWidget {
   @override
@@ -11,6 +13,20 @@ class ShopDetails extends StatefulWidget {
 }
 
 class _ShopDetailsState extends State<ShopDetails> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Set default values for state, city, and country
+    stateValue = 'Maharashtra';
+    cityValue = 'Pune';
+    countryValue = 'India';
+    final defaultPincode = '123456'; // Replace with the desired default pincode
+    fetchLocationDetailsFromPincode(defaultPincode);
+
+  }
+
   TextEditingController _shopname = TextEditingController();
   TextEditingController _address = TextEditingController();
   TextEditingController _pincode = TextEditingController();
@@ -20,40 +36,53 @@ class _ShopDetailsState extends State<ShopDetails> {
   GlobalKey<AutoCompleteTextFieldState<String>> autoCompleteKey =
   GlobalKey<AutoCompleteTextFieldState<String>>();
 
-  // TextEditingController _pincode=TextEditingController();
-
-  List<String> states = ['Maharashtra', 'State 2', 'State 3']; // Example states
-  List<String> countries = [
-    'India',
-    'Country 2',
-    'Country 3'
-  ]; // Example countries
-  List<String> cities = ['Pune', 'City 2', 'City 3'];
-  Map<String, List<String>> cityAreas = {
-    'Pune': ['Area 1', 'Area 2', 'Area 3'],
-    'City 2': ['Area 4', 'Area 5', 'Area 6'],
-    'City 3': ['Area 7', 'Area 8', 'Area 9'],
-  };
-
-  String selectedArea = ''; 
+  String selectedArea = '';
   List<String> areas = [];
 
   String selectedState = 'Maharashtra'; // Default state
   String selectedCountry = 'India'; // Default country
   String selectedCity = 'Pune';
-  List<bool> workingDays = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ]; // Monday-Sunday
+  List<bool> workingDays = [false, false, false, false, false, false, false, false]; // Monday-Sunday
+  String? countryValue = "";
+  String? stateValue = "";
+  String? cityValue = "";
+  String address = "";
 
   TimeOfDay startTime = TimeOfDay(hour: 9, minute: 0); // Default start time
   TimeOfDay endTime = TimeOfDay(hour: 18, minute: 0);
+
+  Future<void> fetchLocationDetailsFromPincode(String pincode) async {
+    final response = await http.get(
+      Uri.parse('https://api.postalpincode.in/pincode/$pincode'),
+    );
+
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData is List) {
+        if (responseData.isNotEmpty) {
+          final result = responseData[0]['PostOffice'][0];
+
+          final String state = result['State'];
+          final String city = result['District'];
+          final String country = result['Country'];
+          print('State: $state, City: $city, Country: $country');
+
+          setState(() {
+              stateValue = state; // Update the state value if it's still the default
+              cityValue = city;   // Update the city value if it's still the default
+              countryValue = country; // Update the country value if it's still the default
+          });
+        } else {
+          print('Empty response data');
+        }
+      } else {
+        print('Invalid response data format');
+      }
+    } else {
+      print('Failed to fetch location details');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,14 +192,17 @@ class _ShopDetailsState extends State<ShopDetails> {
                     LengthLimitingTextInputFormatter(6)
                   ],
                   controller: _pincode,
+                  onChanged: (pincode) {
+                    if (pincode.length >= 6) {
+                      fetchLocationDetailsFromPincode(pincode);
+                    }
+                  },
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Pin-code is Empty';
+                    } else if (text.length <= 5) {
+                      return 'Pin-code is not valid';
                     }
-                    else if(text.length<=5)
-                      {
-                        return 'Pin-code is not valid';
-                      }
                   },
                   decoration: InputDecoration(
                       filled: true,
@@ -188,104 +220,62 @@ class _ShopDetailsState extends State<ShopDetails> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Padding(
+            SizedBox(height: 20),
+            Container(
               padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
+              child: Column(
                 children: [
-                  Flexible(
-                    flex: 1, // Adjust flex values as needed
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(32.0),
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        value: selectedCity,
-                        items: cities.map((city) {
-                          return DropdownMenuItem<String>(
-                            value: city,
-                            child: Text(city),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCity = value!;
-                            selectedArea = '';
-                            areas = cityAreas[selectedCity] ?? [];
-                            autoCompleteKey.currentState!.updateSuggestions(areas);
-                          });
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'City',
-                          prefixIcon: Icon(Icons.location_city),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          //filled: true,
-                        ),
-                      ),
+                  CSCPicker(
+                    showCities: true,
+                    defaultCountry: CscCountry.India,
+                    flagState: CountryFlag.ENABLE,
+                    disabledDropdownDecoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xff1D1617).withOpacity(0.11),
+                            blurRadius: 40,
+                            spreadRadius: 0.0)
+                      ],
+                      color: Color.fromRGBO(247, 247, 249, 1),
+                      borderRadius: BorderRadius.circular(32.0),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Flexible(
-                    flex: 2, // Adjust flex values as needed
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(32.0),
-                      ),
-                      child: DropdownButtonFormField<String>(
-                        value: selectedState,
-                        items: states.map((state) {
-                          return DropdownMenuItem<String>(
-                            value: state,
-                            child: Text(state),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedState = value!;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'State',
-                          prefixIcon: Icon(Icons.location_on),
-                          border: InputBorder.none,
-                        ),
-                      ),
+                    countrySearchPlaceholder: "Country",
+                    stateSearchPlaceholder: "State",
+                    citySearchPlaceholder: "City",
+                    countryDropdownLabel: "Country",
+                    stateDropdownLabel: "State",
+                    cityDropdownLabel: "City",
+                    selectedItemStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
                     ),
+                    dropdownHeadingStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    dropdownItemStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                    dropdownDialogRadius: 20.0,
+                    searchBarRadius: 10.0,
+                    onCountryChanged: (value) {
+                      setState(() {
+                        countryValue = value;
+                      });
+                    },
+                    onStateChanged: (value) {
+                      setState(() {
+                        stateValue = value;
+                      });
+                    },
+                    onCityChanged: (value) {
+                      setState(() {
+                        cityValue = value;
+                      });
+                    },
                   ),
-                  SizedBox(width: 10),
                 ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(32.0),
-                ),
-                child: DropdownButtonFormField<String>(
-                  value: selectedCountry,
-                  items: countries.map((country) {
-                    return DropdownMenuItem<String>(
-                      value: country,
-                      child: Text(country),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCountry = value!;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Country',
-                    prefixIcon: Icon(Icons.public),
-                    border: InputBorder.none,
-                  ),
-                ),
               ),
             ),
             SizedBox(height: 10),
@@ -301,7 +291,8 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: TextEditingController(text: selectedArea),
                   clearOnSubmit: false,
                   suggestions: areas,
-                  itemBuilder: (context, suggestion) => ListTile(title: Text(suggestion)),
+                  itemBuilder: (context, suggestion) =>
+                      ListTile(title: Text(suggestion)),
                   itemFilter: (suggestion, input) =>
                       suggestion.toLowerCase().startsWith(input.toLowerCase()),
                   itemSorter: (a, b) => a.compareTo(b),
@@ -396,7 +387,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                               checkColor: Colors.black,
                             ),
                             Text(getDayName(index),
-                            style: TextStyle(color: Colors.white)),
+                                style: TextStyle(color: Colors.white)),
                           ],
                         );
                       },
@@ -439,8 +430,7 @@ class _ShopDetailsState extends State<ShopDetails> {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                if (_formKey.currentState!.validate()) {
-                }
+                if (_formKey.currentState!.validate()) {}
               },
               child: AnimatedContainer(
                 duration: const Duration(microseconds: 200),
@@ -463,8 +453,8 @@ class _ShopDetailsState extends State<ShopDetails> {
                   ],
                 ),
                 child: Center(child: Text('Submit')),
-                ),
               ),
+            ),
             SizedBox(height: 20),
           ],
         ),
