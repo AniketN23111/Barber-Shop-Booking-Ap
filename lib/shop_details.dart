@@ -171,9 +171,6 @@ class _ShopDetailsState extends State<ShopDetails> {
                       {
                         return 'Pin-code is not valid';
                       }
-                    else{
-
-                    }
                   },
                   decoration: InputDecoration(
                       filled: true,
