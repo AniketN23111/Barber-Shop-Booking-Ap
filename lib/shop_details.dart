@@ -91,10 +91,10 @@ class _ShopDetailsState extends State<ShopDetails> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 550),
+            SizedBox(height: 350),
             Text(
-              "Shope Details",
-              style: TextStyle(fontSize: 20),
+              "Shop Details",
+              style: TextStyle(fontSize: 30,color: Colors.white),
             ),
             SizedBox(height: 20),
             Padding(
@@ -356,7 +356,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   Center(
                     child: Text(
                       'Working Days:',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 30,color: Colors.white),
                     ),
                   ),
                   Center(

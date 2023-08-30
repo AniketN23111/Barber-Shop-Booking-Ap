@@ -20,10 +20,10 @@ class _EmployeesSectionState extends State<EmployeesSection> {
       key: _formKey,
       child: Column(
         children: [
-          SizedBox(height: 550),
+          SizedBox(height: 350),
           Text(
             'Employees',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 30,color: Colors.white),
           ),
           SizedBox(height: 10),
           Column(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:saloon/splash_screen.dart';
-import 'package:saloon/salon_shop_details_page.dart'; // Update the import statement
+import 'package:saloon/home_page.dart'; // Update the import statement
 
 void main() => runApp(MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => SplashScreen(),
-        '/shopDetails': (context) => SalonShopDetailsPage(), // New route
+        '/shopDetails': (context) => HomePage(), // New route
       },
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,

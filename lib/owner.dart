@@ -29,11 +29,12 @@ class _OwnerState extends State<Owner> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 550),
+            SizedBox(height: 350),
             Text(
               'Owner Details',
-              style: TextStyle(fontSize: 20,color: Colors.white),
+              style: TextStyle(fontSize: 30,color: Colors.white),
             ),
+            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Row(
