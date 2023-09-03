@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:saloon/main.dart';
 
 class TimePickerButton extends StatefulWidget {
   final String label;

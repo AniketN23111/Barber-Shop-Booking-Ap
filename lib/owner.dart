@@ -1,10 +1,7 @@
-import 'package:csc_picker/model/select_status_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:saloon/main.dart';
-import 'package:saloon/shop_details.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 
 class Owner extends StatefulWidget {
