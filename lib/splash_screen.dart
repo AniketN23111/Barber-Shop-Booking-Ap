@@ -21,7 +21,7 @@ class _SplashScreen extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacementNamed(context, 'phoneLogin');
+    Navigator.pushReplacementNamed(context, 'getStarted');
   }
 
   @override

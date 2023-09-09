@@ -74,6 +74,9 @@ flutter:
     - assets/background.png
     - assets/icons/
     - assets/salon-s.gif
+    - assets/images/Men.jpg
+    - assets/images/Spa.jpg
+    - assets/images/Parlour.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
