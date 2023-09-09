@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:saloon/employees_section.dart';
-import 'package:saloon/owner.dart';
-import 'package:saloon/shop_details.dart';
+import 'employees_section.dart';
+import 'owner.dart';
+import 'shop_details.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class HomePage extends StatefulWidget {
+class PartnerPage extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PartnerPage> createState() => _PartnerPage();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PartnerPage extends State<PartnerPage> {
   List<String> employees = [];
 
   PageController _pageController = PageController(initialPage: 0);

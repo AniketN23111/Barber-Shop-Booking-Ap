@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:saloon/AdditionalInfo.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -73,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: double.infinity,height: 300,
               child: Expanded(
+                flex: 1,
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: images.length,
@@ -101,8 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   final User? user = await _handleGoogleSignIn();
                   if (user != null) {
-                    // Navigate to your main screen or do something with the user
-                    // after successful Google sign-in.
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdditionalInfoScreen(user: user)));
                   }
                 },
                 label: Text('Login with Google'),
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text("Want to be a partner? "),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'homePage');
+                    Navigator.pushNamed(context, 'partner-page');
                   },
                   child: Text('Click here'),
                 ),

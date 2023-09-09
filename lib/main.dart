@@ -1,12 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:saloon/Get%20Started/getStarted.dart';
-import 'package:saloon/LoginScreen.dart';
-import 'package:saloon/otp_screen.dart';
+import 'package:saloon/HomeScreen/HomePage.dart';
+import 'package:saloon/LoginScreens/LoginScreen.dart';
+import 'package:saloon/LoginScreens/otp_screen.dart';
 import 'package:saloon/splash_screen.dart';
-import 'package:saloon/home_page.dart';
-import 'package:saloon/phone_login_screen.dart';
-
+import 'package:saloon/LoginScreens/phone_login_screen.dart';
+import 'Partner_Pages/partner_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -16,7 +16,7 @@ void main() async {
       '/': (context) => SplashScreen(),
       'loginScreen':(context) => LoginScreen(),
       'getStarted':(context)=>GetStarted(),
-      'homePage': (context) => HomePage(),
+      'partner-page':(context)=> PartnerPage(),
       'phoneLogin': (context) => phonelogin(),
       'otp': (context) => Otp_Screen(),
     },

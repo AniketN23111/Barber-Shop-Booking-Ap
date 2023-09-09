@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:saloon/LoginScreen.dart';
-import 'package:saloon/home_page.dart';
+import 'package:saloon/LoginScreens/LoginScreen.dart';
+import 'package:saloon/Partner_Pages/partner_page.dart';
 import 'content_Model.dart';
 
 class GetStarted extends StatefulWidget {
