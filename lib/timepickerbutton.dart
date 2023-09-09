@@ -36,17 +36,12 @@ class _TimePickerButtonState extends State<TimePickerButton> {
         height: 50,
         width: 500,
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-                color: Colors.grey[500]!,
-                offset: const Offset(4, 4),
-                blurRadius: 15,
-                spreadRadius: 1),
-            const BoxShadow(
                 color: Colors.white,
-                offset: const Offset(-4, -4),
+                offset: const Offset(4, 4),
                 blurRadius: 15,
                 spreadRadius: 1),
           ],

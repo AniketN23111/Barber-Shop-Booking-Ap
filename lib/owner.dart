@@ -29,7 +29,7 @@ class _OwnerState extends State<Owner> {
             SizedBox(height: 350),
             Text(
               'Owner Details',
-              style: TextStyle(fontSize: 30,color: Colors.white),
+              style: TextStyle(fontSize: 30, color: Colors.black),
             ),
             SizedBox(height: 20),
             Padding(
@@ -37,7 +37,7 @@ class _OwnerState extends State<Owner> {
               child: Row(
                 children: [
                   Flexible(
-                    flex :1,
+                    flex: 1,
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -55,7 +55,11 @@ class _OwnerState extends State<Owner> {
                         controller: _firstname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'First Name is Empty';
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("First Name is Empty"),
+                              ),
+                            );
                           }
                         },
                         decoration: InputDecoration(
@@ -65,8 +69,8 @@ class _OwnerState extends State<Owner> {
                             hintText: 'FirstName',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.all(12),
-                              child:
-                              SvgPicture.asset('assets/icons/user-svgrepo-com.svg'),
+                              child: SvgPicture.asset(
+                                  'assets/icons/user-svgrepo-com.svg'),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -76,7 +80,7 @@ class _OwnerState extends State<Owner> {
                   ),
                   SizedBox(width: 10),
                   Flexible(
-                    flex :1,
+                    flex: 1,
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
@@ -94,7 +98,11 @@ class _OwnerState extends State<Owner> {
                         controller: _lastname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Last Name is Empty';
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Last Name is Empty"),
+                              ),
+                            );
                           }
                         },
                         decoration: InputDecoration(
@@ -104,8 +112,8 @@ class _OwnerState extends State<Owner> {
                             hintText: 'Last Name',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.all(12),
-                              child:
-                              SvgPicture.asset('assets/icons/user-svgrepo-com.svg'),
+                              child: SvgPicture.asset(
+                                  'assets/icons/user-svgrepo-com.svg'),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
@@ -139,7 +147,7 @@ class _OwnerState extends State<Owner> {
                         initialSelection: 'IN',
                         showCountryOnly: false,
                         showOnlyCountryWhenClosed: false,
-                        favorite: ['+91','IN'],
+                        favorite: ['IN'],
                         enabled: true,
                         hideMainText: false,
                         showFlagMain: true,
@@ -153,7 +161,7 @@ class _OwnerState extends State<Owner> {
                   ),
                   SizedBox(width: 10),
                   Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       decoration: BoxDecoration(
                         boxShadow: [
@@ -174,17 +182,23 @@ class _OwnerState extends State<Owner> {
                         controller: _mNumber,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Number is Empty';
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Number is Empty"),
+                              ),
+                            );
+                          } else if (text.length <= 9) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Put the 10 Digit Number"),
+                              ),
+                            );
                           }
-                          else if(text.length<=9)
-                            {
-                              return 'Put the 10 Digit Number';
-                            }
                         },
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: EdgeInsets.all(5),
+
                             hintText: 'Mobile Number',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.all(12),
@@ -218,9 +232,16 @@ class _OwnerState extends State<Owner> {
                 child: TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _email,
-                  validator: (text) => text!=null && !EmailValidator.validate(text)
-                    ?'Enter Valid Mail'
-                    : null,
+                  validator: (text) {
+                    if(text != null && !EmailValidator.validate(text))
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Enter Valid Mail"),
+                          ),
+                        );
+                      }
+                  },
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -262,12 +283,18 @@ class _OwnerState extends State<Owner> {
                   ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Aadhaar Number is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Aadhaar Number is Empty"),
+                        ),
+                      );
+                    } else if (text.length <= 11) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Enter Valid Aadhaar Number"),
+                        ),
+                      );
                     }
-                    else if(text.length<=11)
-                      {
-                        return("Enter Valid Aadhaar Number");
-                      }
                   },
                   decoration: InputDecoration(
                       filled: true,
@@ -309,7 +336,11 @@ class _OwnerState extends State<Owner> {
                   ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Name is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Put the Pan Card Number"),
+                        ),
+                      );
                     }
                   },
                   decoration: InputDecoration(
@@ -329,32 +360,13 @@ class _OwnerState extends State<Owner> {
               ),
             ),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                if (_formKey.currentState!.validate()) {
-                }
-              },
-              child: AnimatedContainer(
-                duration: const Duration(microseconds: 200),
-                height: 50,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[500]!,
-                        offset: const Offset(4, 4),
-                        blurRadius: 15,
-                        spreadRadius: 1),
-                    const BoxShadow(
-                        color: Colors.white,
-                        offset: const Offset(-4, -4),
-                        blurRadius: 15,
-                        spreadRadius: 1),
-                  ],
-                ),
-                child: Center(child: Text("Submit"))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 150),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {}
+                },
+                child: Center(child: Text("Submit")),
               ),
             ),
           ],
@@ -364,28 +376,26 @@ class _OwnerState extends State<Owner> {
   }
 }
 
-class AadhaarCardNumber extends TextInputFormatter{
+class AadhaarCardNumber extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue){
-    if(newValue.selection.baseOffset==0)
-      {
-        return newValue;
-      }
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
 
     String enteredData = newValue.text;
-    StringBuffer buffer =StringBuffer();
+    StringBuffer buffer = StringBuffer();
 
-    for(int i=0;i<enteredData.length;i++)
-      {
-        buffer.write(enteredData[i]);
-        int index =i+1;
-        if(index%4==0 && enteredData.length!= index){
-          buffer.write(" ");
-        }
+    for (int i = 0; i < enteredData.length; i++) {
+      buffer.write(enteredData[i]);
+      int index = i + 1;
+      if (index % 4 == 0 && enteredData.length != index) {
+        buffer.write(" ");
       }
-  return TextEditingValue(
-    text: buffer.toString(),
-    selection: TextSelection.collapsed(offset: buffer.toString().length)
-  );
+    }
+    return TextEditingValue(
+        text: buffer.toString(),
+        selection: TextSelection.collapsed(offset: buffer.toString().length));
   }
 }

@@ -115,7 +115,11 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _shopname,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Shop Name is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Shop Name is Empty"),
+                        ),
+                      );
                     }
                   },
                   decoration: InputDecoration(
@@ -152,7 +156,11 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _address,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Address is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Address Name is Empty"),
+                        ),
+                      );
                     }
                   },
                   decoration: InputDecoration(
@@ -199,9 +207,17 @@ class _ShopDetailsState extends State<ShopDetails> {
                   },
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Pin-code is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Pin-code is Empty"),
+                        ),
+                      );
                     } else if (text.length <= 5) {
-                      return 'Pin-code is not valid';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Pin-Code is Not Valid"),
+                        ),
+                      );
                     }
                   },
                   decoration: InputDecoration(
@@ -329,7 +345,11 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _licence,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Shop License is Empty';
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Shop License is Empty"),
+                        ),
+                      );
                     }
                   },
                   decoration: InputDecoration(
@@ -356,7 +376,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   Center(
                     child: Text(
                       'Working Days:',
-                      style: TextStyle(fontSize: 30,color: Colors.white),
+                      style: TextStyle(fontSize: 30,color: Colors.black),
                     ),
                   ),
                   Center(
@@ -388,7 +408,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                               checkColor: Colors.black,
                             ),
                             Text(getDayName(index),
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(color: Colors.black)),
                           ],
                         );
                       },
@@ -429,30 +449,12 @@ class _ShopDetailsState extends State<ShopDetails> {
               ),
             ),
             SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                if (_formKey.currentState!.validate()) {}
-              },
-              child: AnimatedContainer(
-                duration: const Duration(microseconds: 200),
-                height: 30,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[500]!,
-                        offset: const Offset(4, 4),
-                        blurRadius: 15,
-                        spreadRadius: 1),
-                    const BoxShadow(
-                        color: Colors.white,
-                        offset: const Offset(-4, -4),
-                        blurRadius: 15,
-                        spreadRadius: 1),
-                  ],
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 150),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {}
+                },
                 child: Center(child: Text('Submit')),
               ),
             ),

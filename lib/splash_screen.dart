@@ -21,7 +21,7 @@ class _SplashScreen extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacementNamed(context, '/shopDetails');
+    Navigator.pushReplacementNamed(context, 'phoneLogin');
   }
 
   @override

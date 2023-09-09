@@ -1,23 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:saloon/otp_screen.dart';
 import 'package:saloon/splash_screen.dart';
-import 'package:saloon/home_page.dart'; // Update the import statement
+import 'package:saloon/home_page.dart';
+import 'package:saloon/phone_login_screen.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => SplashScreen(),
-        '/shopDetails': (context) => HomePage(), // New route
-      },
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Color.fromRGBO(18, 26, 18, 1),
-        scaffoldBackgroundColor: Color.fromRGBO(255, 255, 255, 1),
-      ),
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    routes: {
+      '/': (context) => HomePage(),
+      'homePage': (context) => HomePage(),
+      'phoneLogin': (context) => phonelogin(),
+      'otp': (context) => Otp_Screen(),
+    },
+    theme: ThemeData(
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      primaryColor: Color.fromRGBO(18, 26, 18, 1),
+      scaffoldBackgroundColor: Color.fromRGBO(255, 255, 255, 1),
+    ),
+  )
+  );
 }

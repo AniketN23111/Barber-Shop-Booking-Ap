@@ -136,7 +136,6 @@ class _EmployeesSectionState extends State<EmployeesSection> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Container(
-                height: 50,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -149,10 +148,7 @@ class _EmployeesSectionState extends State<EmployeesSection> {
                 ),
                 child: DropdownButtonFormField<String>(
                   value: selectedMainService,
-                  hint: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text('Select Main Service'),
-                  ),
+                  hint: Text('Select Main Service'),
                   items: mainServices.map((mainService) {
                     return DropdownMenuItem<String>(
                       value: mainService,
@@ -178,7 +174,6 @@ class _EmployeesSectionState extends State<EmployeesSection> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
-                  height: 50,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
