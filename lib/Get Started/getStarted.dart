@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:saloon/home_page.dart';
@@ -11,16 +12,34 @@ class GetStarted extends StatefulWidget {
 class _GetStarted extends State<GetStarted> {
   int currentIndex = 0;
   late PageController _controller;
+  late Timer _timer;
 
   @override
   void initState() {
     _controller = PageController(initialPage: 0);
+    _startTimer();
     super.initState();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      if (currentIndex < contents.length - 1) {
+        currentIndex++;
+        _controller.animateToPage(
+          currentIndex,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        _timer.cancel();
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -71,50 +90,22 @@ class _GetStarted extends State<GetStarted> {
             ),
           ),
           Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                contents.length,
-                    (index) => buildDot(index, context),
-              ),
-            ),
-          ),
-          Container(
             height: 60,
             margin: EdgeInsets.all(40),
             width: double.infinity,
             child: ElevatedButton(
-              child: Text(
-                  currentIndex == contents.length - 1 ? "Get Started" : "Next"),
+              child: Text("Get Started"),
               onPressed: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => HomePage(),
-                    ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => HomePage(),
+                  ),
                 );
               },
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Container buildDot(int index, BuildContext context) {
-    return Container(
-      height: 10,
-      width: currentIndex == index ? 25 : 10,
-      margin: EdgeInsets.only(right: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor,
       ),
     );
   }
