@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:saloon/LoginScreen.dart';
 import 'package:saloon/home_page.dart';
 import 'content_Model.dart';
 
@@ -99,7 +100,7 @@ class _GetStarted extends State<GetStarted> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => HomePage(),
+                    builder: (_) => LoginScreen(),
                   ),
                 );
               },

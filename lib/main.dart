@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:saloon/Get%20Started/getStarted.dart';
+import 'package:saloon/LoginScreen.dart';
 import 'package:saloon/otp_screen.dart';
 import 'package:saloon/splash_screen.dart';
 import 'package:saloon/home_page.dart';
@@ -13,6 +14,7 @@ void main() async {
     debugShowCheckedModeBanner: false,
     routes: {
       '/': (context) => SplashScreen(),
+      'loginScreen':(context) => LoginScreen(),
       'getStarted':(context)=>GetStarted(),
       'homePage': (context) => HomePage(),
       'phoneLogin': (context) => phonelogin(),
