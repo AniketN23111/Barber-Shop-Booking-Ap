@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pinput.dart';
+import 'package:saloon/AdditionalInfo.dart';
 import 'phone_login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -72,8 +73,6 @@ class _Otp_ScreenState extends State<Otp_Screen> {
               Pinput(
                 length: 6,
                 showCursor: true,
-                androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
-                listenForMultipleSmsOnAndroid: true,
                 onChanged: (value) {
                   code = value;
                 },
@@ -86,10 +85,24 @@ class _Otp_ScreenState extends State<Otp_Screen> {
                   onPressed: () async {
                     try {
                       PhoneAuthCredential credential =
-                          PhoneAuthProvider.credential(
-                              verificationId: phonelogin.verify, smsCode: code);
+                      PhoneAuthProvider.credential(
+                          verificationId: phonelogin.verify, smsCode: code);
                       await auth.signInWithCredential(credential);
-                      Navigator.pushNamedAndRemoveUntil(context, 'homePage',(route) => false);
+
+                      // Check if the user is new or existing
+                      User? user = auth.currentUser;
+                      if (user != null) {
+                        // You can check if the user exists in Firestore
+                        // and decide whether to navigate to AdditionalInfoScreen or HomePage
+                        // For simplicity, I'm assuming the user is new and navigating to AdditionalInfoScreen.
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => AdditionalInfoScreen(user: user),
+                        ));
+                      } else {
+                        // Handle the case when user is null
+                        // This should not happen in a normal OTP verification flow
+                        // You might want to show an error message or navigate to a different screen.
+                      }
                     } catch (e) {
                       Fluttertoast.showToast(
                         msg: 'Wrong Otp',

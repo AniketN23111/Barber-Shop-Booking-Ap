@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:saloon/AdditionalInfo.dart';
+import 'package:saloon/HomeScreen/HomePage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -50,11 +52,30 @@ class _LoginScreenState extends State<LoginScreen> {
         idToken: googleSignInAuthentication.idToken,
       );
 
+      // Check if the user already exists in Firebase
       final UserCredential authResult = await _auth.signInWithCredential(credential);
       final User? user = authResult.user;
-      return user;
+
+      if (user != null) {
+        // Check if the user exists in your Firestore database (adjust collection and field names accordingly)
+        final userSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (userSnapshot.exists) {
+          // The user is registered, so navigate to the home page
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(user: user)));
+        } else {
+          // The user is not registered, so navigate to the additional info screen
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdditionalInfoScreen(user: user)));
+        }
+      }
+
+      return user; // Return the user here
     } catch (error) {
       print(error);
+      // Handle the error appropriately
       return null;
     }
   }
@@ -102,9 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
                 onPressed: () async {
                   final User? user = await _handleGoogleSignIn();
-                  if (user != null) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AdditionalInfoScreen(user: user)));
-                  }
                 },
                 label: Text('Login with Google'),
               ),
@@ -118,7 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     minimumSize: Size(double.infinity, 50)
                 ),
                 onPressed: () {
-
                   Navigator.pushReplacementNamed(context, 'phoneLogin');
                   // Implement phone number sign-in using Firebase
                 },

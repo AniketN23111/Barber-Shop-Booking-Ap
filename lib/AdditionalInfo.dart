@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:saloon/HomeScreen/HomePage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdditionalInfoScreen extends StatefulWidget {
   final User user;
@@ -47,6 +48,7 @@ class _AdditionalInfoScreenState extends State<AdditionalInfoScreen> {
     }
     // Set the email
     emailController.text = widget.user.email ?? '';
+    mobileController.text=widget.user.phoneNumber??'';
   }
 
   @override
@@ -91,29 +93,37 @@ class _AdditionalInfoScreenState extends State<AdditionalInfoScreen> {
               decoration: InputDecoration(labelText: 'Mobile Number'),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Retrieve the values entered by the user
+              onPressed: () async{
                 String firstName = firstNameController.text;
                 String lastName = lastNameController.text;
                 String email = emailController.text;
                 String dob = dobController.text;
                 String mobile = mobileController.text;
 
-                // Now you can use these values as needed
-                // For example, you can construct the full name
-                String fullName = '$firstName $lastName';
+                // Create a map of user data
+                Map<String, dynamic> userData = {
+                  'firstName': firstName,
+                  'lastName': lastName,
+                  'email': email,
+                  'dob': dob,
+                  'mobile': mobile,
+                };
+
+                // Reference to the user's document in Firestore
+                DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(widget.user.uid);
+
+                // Set the user data in Firestore
+                await userDoc.set(userData);
+
+                // Navigate to the homepage
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(
-                      fullName: fullName,
-                      email: email,
-                      dob: dob,
-                      mobile: mobile,
+                      user: widget.user,
                     ),
                   ),
                 );
-                // You can also save these values or proceed as needed
               },
               child: Text('Submit'),
             ),

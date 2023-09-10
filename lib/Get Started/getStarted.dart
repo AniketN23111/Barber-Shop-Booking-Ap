@@ -97,12 +97,7 @@ class _GetStarted extends State<GetStarted> {
             child: ElevatedButton(
               child: Text("Get Started"),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => LoginScreen(),
-                  ),
-                );
+                Navigator.pushReplacementNamed(context, 'loginScreen');
               },
             ),
           )
