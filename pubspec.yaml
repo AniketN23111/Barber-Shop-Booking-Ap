@@ -54,6 +54,10 @@ dependencies:
   fluttertoast: ^8.2.2
   google_sign_in: ^6.1.5
   cloud_firestore: ^4.9.1
+  image_picker: ^1.0.4
+  progress_dialog_null_safe: ^1.0.7
+  ndialog: ^4.3.1
+  firebase_storage: ^11.2.6
 
 dev_dependencies:
   flutter_test:

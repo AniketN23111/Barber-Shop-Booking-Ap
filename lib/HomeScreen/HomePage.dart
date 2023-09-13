@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:saloon/AdditionalInfo.dart';
+import 'package:saloon/HomeScreen/ProfilePage.dart'; // Import the ProfilePage
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final User user;
 
   HomePage({required this.user});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _tabs = [
+    // Home Tab
+    Center(
+      child: Text('Home Content'),
+    ),
+    // Appointments Tab
+    Center(
+      child: Text('Appointments Content'),
+    ),
+    // Profile Tab
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,49 +33,28 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Homepage'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('users').doc(user.uid).get(),
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Loading indicator while fetching data
-          }
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          if (!snapshot.hasData || !snapshot.data!.exists) {
-            // No user data available, handle navigation here
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              Navigator.pushReplacementNamed(context, 'getStarted');
-            });
-            return Container(); // Return an empty container for now
-          }
-
-          // Extract user data from Firestore
-          Map<String, dynamic> userData = snapshot.data!.data() as Map<String, dynamic>;
-          String firstName = '${userData['firstName']}';
-          String lastName = ' ${userData['lastName']}';
-          String email = userData['email'];
-          String dob = userData['dob'];
-          String mobile = userData['mobile'];
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('First Name: $firstName'),
-              Text('Last Name: $lastName'),
-              Text('Email: $email'),
-              Text('Date of Birth: $dob'),
-              Text('Mobile Number: $mobile'),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, 'loginScreen');
-                },
-                child: Text('Logout'),
-              ),
-            ],
-          );
+      body: _tabs[_currentIndex], // Display the selected tab content
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
         },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Appointments',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
