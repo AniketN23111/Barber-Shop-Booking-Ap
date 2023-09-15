@@ -1,6 +1,10 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:saloon/HomeScreen/MyHomePage.dart';
 import 'package:saloon/HomeScreen/ProfilePage.dart'; // Import the ProfilePage
+import 'package:flutter/cupertino.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -16,9 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _tabs = [
     // Home Tab
-    Center(
-      child: Text('Home Content'),
-    ),
+    MyHomePage(),
     // Appointments Tab
     Center(
       child: Text('Appointments Content'),
@@ -30,31 +32,24 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Homepage'),
-      ),
       body: _tabs[_currentIndex], // Display the selected tab content
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.white,
+        color: Colors.grey.shade200, // Background color of the navigation bar
+        buttonBackgroundColor: Colors.grey.shade200, // Background color of the active tab
+        height: 70,
+        animationDuration: Duration(milliseconds: 300),// Height of the navigation bar
+        index: _currentIndex,
+        items: <Widget>[
+          SvgPicture.asset('assets/icons/home-angle-svgrepo-com.svg', width: 30, height: 30),
+          SvgPicture.asset('assets/icons/calendar-svgrepo-com.svg', width: 30, height: 30),
+          SvgPicture.asset('assets/icons/profile-svgrepo-com (1).svg', width: 30, height: 30),
+        ],
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Appointments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
