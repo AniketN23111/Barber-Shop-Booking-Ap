@@ -1,4 +1,5 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -453,7 +454,37 @@ class _ShopDetailsState extends State<ShopDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 150),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    final DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+
+                    // Create a map with the data you want to save
+                    final Map<String, dynamic> shopData = {
+                      "shopName": _shopname.text,
+                      "address": _address.text,
+                      "pincode": _pincode.text,
+                      "license": _licence.text,
+                      "country": countryValue,
+                      "state": stateValue,
+                      "city": cityValue,
+                      "area": selectedArea,
+                      "workingDays": workingDays,
+                      "startTime": startTime.toString(),
+                      "endTime": endTime.toString(),
+                    };
+
+                    // Push the data to Firebase
+                    databaseRef.child("shops").push().set(shopData).then((_) {
+                      // Data saved successfully
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Shop information saved to Firebase"),
+                        ),
+                      );
+                    }).catchError((error) {
+                      // Handle any errors that occur
+                      print("Error saving data: $error");
+                    });
+                  }
                 },
                 child: Center(child: Text('Submit')),
               ),

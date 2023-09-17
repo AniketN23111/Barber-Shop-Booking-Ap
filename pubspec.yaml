@@ -59,6 +59,7 @@ dependencies:
   ndialog: ^4.3.1
   firebase_storage: ^11.2.6
   flutter_datetime_picker: ^1.5.1
+  firebase_database: ^10.2.5
 
 dev_dependencies:
   flutter_test:
