@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'shop_details.dart';
 
 class Owner extends StatefulWidget {
+  final Function(int) changePageIndex;
+  Owner({required this.changePageIndex});
   @override
   _OwnerState createState() => _OwnerState();
 }
@@ -55,11 +58,7 @@ class _OwnerState extends State<Owner> {
                         controller: _firstname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("First Name is Empty"),
-                              ),
-                            );
+                            return "First Name is Empty";
                           }
                         },
                         decoration: InputDecoration(
@@ -98,11 +97,7 @@ class _OwnerState extends State<Owner> {
                         controller: _lastname,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Last Name is Empty"),
-                              ),
-                            );
+                            return "Last Name is Empty";
                           }
                         },
                         decoration: InputDecoration(
@@ -182,17 +177,9 @@ class _OwnerState extends State<Owner> {
                         controller: _mNumber,
                         validator: (text) {
                           if (text == null || text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Number is Empty"),
-                              ),
-                            );
+                            return "Number is Empty";
                           } else if (text.length <= 9) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Put the 10 Digit Number"),
-                              ),
-                            );
+                            return "Put the 10 Digit Number";
                           }
                         },
                         decoration: InputDecoration(
@@ -235,11 +222,7 @@ class _OwnerState extends State<Owner> {
                   validator: (text) {
                     if(text != null && !EmailValidator.validate(text))
                       {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Enter Valid Mail"),
-                          ),
-                        );
+                        return "Enter Valid Mail";
                       }
                   },
                   decoration: InputDecoration(
@@ -283,17 +266,9 @@ class _OwnerState extends State<Owner> {
                   ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Aadhaar Number is Empty"),
-                        ),
-                      );
+                      return "Aadhaar Number is Empty";
                     } else if (text.length <= 11) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Enter Valid Aadhaar Number"),
-                        ),
-                      );
+                     return "Enter Valid Aadhaar Number";
                     }
                   },
                   decoration: InputDecoration(
@@ -328,7 +303,7 @@ class _OwnerState extends State<Owner> {
                   borderRadius: BorderRadius.circular(32.0),
                 ),
                 child: TextFormField(
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   controller: _pan,
                   textCapitalization: TextCapitalization.characters,
                   inputFormatters: <TextInputFormatter>[
@@ -336,11 +311,7 @@ class _OwnerState extends State<Owner> {
                   ],
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Put the Pan Card Number"),
-                        ),
-                      );
+                     return "Put the Pan Card Number";
                     }
                   },
                   decoration: InputDecoration(
@@ -364,9 +335,11 @@ class _OwnerState extends State<Owner> {
               padding: const EdgeInsets.symmetric(horizontal: 150),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    widget.changePageIndex(1);
+                  }
                 },
-                child: Center(child: Text("Submit")),
+                child: Center(child: Text("Next")),
               ),
             ),
           ],

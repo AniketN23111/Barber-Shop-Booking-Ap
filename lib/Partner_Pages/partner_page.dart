@@ -16,6 +16,12 @@ class _PartnerPage extends State<PartnerPage> {
   PageController _pageController = PageController(initialPage: 0);
 
   int currentIndex = 0;
+  void changePageIndex(int newIndex) {
+    setState(() {
+      currentIndex = newIndex;
+      _pageController.jumpToPage(newIndex);
+    });
+  }
 
   void navigateToPage(int index) {
     setState(() {
@@ -59,9 +65,10 @@ class _PartnerPage extends State<PartnerPage> {
                 },
                 itemBuilder: (context, index) {
                   if (index == 0) {
-                    return Owner();
+                    return ShopDetails(changePageIndex: changePageIndex);
                   } else if (index == 1) {
-                    return ShopDetails();
+
+                    return Owner(changePageIndex: changePageIndex);
                   } else {
                     return EmployeesSection(employees);
                   }

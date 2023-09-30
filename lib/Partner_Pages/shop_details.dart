@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ShopDetails extends StatefulWidget {
+  final Function(int) changePageIndex;
+  ShopDetails({required this.changePageIndex});
   @override
   _ShopDetailsState createState() => _ShopDetailsState();
 }
@@ -95,7 +97,7 @@ class _ShopDetailsState extends State<ShopDetails> {
             SizedBox(height: 350),
             Text(
               "Shop Details",
-              style: TextStyle(fontSize: 30,color: Colors.white),
+              style: TextStyle(fontSize: 30,color: Colors.black),
             ),
             SizedBox(height: 20),
             Padding(
@@ -116,11 +118,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _shopname,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Shop Name is Empty"),
-                        ),
-                      );
+                      return "Shop Name is Empty";
                     }
                   },
                   decoration: InputDecoration(
@@ -157,11 +155,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _address,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Address Name is Empty"),
-                        ),
-                      );
+                      return "Address Name is Empty";
                     }
                   },
                   decoration: InputDecoration(
@@ -208,11 +202,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   },
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Pin-code is Empty"),
-                        ),
-                      );
+                      return "Pin-code is Empty";
                     } else if (text.length <= 5) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -346,11 +336,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                   controller: _licence,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Shop License is Empty"),
-                        ),
-                      );
+                     return "Shop License is Empty";
                     }
                   },
                   decoration: InputDecoration(
@@ -455,9 +441,8 @@ class _ShopDetailsState extends State<ShopDetails> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    final DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
 
-                    // Create a map with the data you want to save
+                    final DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
                     final Map<String, dynamic> shopData = {
                       "shopName": _shopname.text,
                       "address": _address.text,
@@ -473,20 +458,20 @@ class _ShopDetailsState extends State<ShopDetails> {
                     };
 
                     // Push the data to Firebase
-                    databaseRef.child("shops").push().set(shopData).then((_) {
+                    databaseRef.child(_shopname.text).push().set(shopData).then((_) {
                       // Data saved successfully
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Shop information saved to Firebase"),
                         ),
                       );
+                      widget.changePageIndex(2);
                     }).catchError((error) {
-                      // Handle any errors that occur
                       print("Error saving data: $error");
                     });
                   }
                 },
-                child: Center(child: Text('Submit')),
+                child: Center(child: Text('Next')),
               ),
             ),
             SizedBox(height: 20),
