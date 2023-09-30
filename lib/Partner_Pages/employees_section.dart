@@ -55,7 +55,6 @@ class _EmployeesSectionState extends State<EmployeesSection> {
       print('Uploaded image URL: $imageUrl');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

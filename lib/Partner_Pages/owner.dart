@@ -356,7 +356,6 @@ class AadhaarCardNumber extends TextInputFormatter {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
-
     String enteredData = newValue.text;
     StringBuffer buffer = StringBuffer();
 

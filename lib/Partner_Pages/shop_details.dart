@@ -86,7 +86,6 @@ class _ShopDetailsState extends State<ShopDetails> {
       print('Failed to fetch location details');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Form(

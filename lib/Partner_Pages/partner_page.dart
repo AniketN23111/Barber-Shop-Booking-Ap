@@ -29,7 +29,6 @@ class _PartnerPage extends State<PartnerPage> {
       _pageController.jumpToPage(index);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
