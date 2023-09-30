@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "948307136375",
-    "project_id": "salon-1e920",
-    "storage_bucket": "salon-1e920.appspot.com"
+    "project_number": "609804976261",
+    "project_id": "quiky-admin",
+    "storage_bucket": "quiky-admin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:948307136375:android:285c1a66928a7d96431b72",
+        "mobilesdk_app_id": "1:609804976261:android:5cd721bbd193f0f9eaa9ec",
         "android_client_info": {
           "package_name": "com.example.saloon"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "948307136375-16vfvqkuot7rcgti5fm9spvv9hj11ben.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCeRRZgGpOvuNNoqhdpMke4boWUOijN_KU"
+          "current_key": "AIzaSyBSrNBPkTpr43HMjN7lb8MYPH4ryguewFU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "948307136375-16vfvqkuot7rcgti5fm9spvv9hj11ben.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
