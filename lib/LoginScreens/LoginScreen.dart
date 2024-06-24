@@ -80,9 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _handlePhoneSignIn() async {
-    // Implement phone number sign-in using Firebase
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
               icon: SvgPicture.asset(
                   'assets/icons/google-color-svgrepo-com.svg',height: 20,),
               style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                onPrimary: Colors.black,
+                foregroundColor: Colors.black, backgroundColor: Colors.white,
                 minimumSize: Size(double.infinity, 50)
               ),
                 onPressed: () async {
@@ -131,8 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: SvgPicture.asset(
                   'assets/icons/phone-svgrepo-com.svg',height: 20,),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: Colors.black,
+                    foregroundColor: Colors.black, backgroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 50)
                 ),
                 onPressed: () {

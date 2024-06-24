@@ -108,8 +108,7 @@ class _phoneloginState extends State<phonelogin> {
                 },
                     child: Text('Send the Code'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                   ),
                 ),

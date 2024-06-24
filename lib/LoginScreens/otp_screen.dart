@@ -31,12 +31,12 @@ class _Otp_ScreenState extends State<Otp_Screen> {
       ),
     );
 
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+    defaultPinTheme.copyDecorationWith(
       border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
       borderRadius: BorderRadius.circular(8),
     );
 
-    final submittedPinTheme = defaultPinTheme.copyWith(
+    defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
@@ -114,8 +114,7 @@ class _Otp_ScreenState extends State<Otp_Screen> {
                   },
                   child: Text('Verify Phone Number'),
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                      onPrimary: Colors.white,
+                      foregroundColor: Colors.white, backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
